@@ -4,7 +4,10 @@ import android.os.Bundle
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import intermediate.course.R
+import intermediate.course.notes.NotesListFragment
+import intermediate.course.tasks.TasksListFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
 
 class NavigationActivity : AppCompatActivity() {
@@ -13,11 +16,11 @@ class NavigationActivity : AppCompatActivity() {
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_tasks -> {
-                    messageTextView.setText(R.string.title_task)
+                    replaceFragment(TasksListFragment.newInstance())
                     return@OnNavigationItemSelectedListener true
                 }
                 R.id.navigation_notes -> {
-                    messageTextView.setText(R.string.title_note)
+                    replaceFragment(NotesListFragment.newInstance())
                     return@OnNavigationItemSelectedListener true
                 }
             }
@@ -27,18 +30,18 @@ class NavigationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
-
+        replaceFragment(TasksListFragment.newInstance())
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        messageTextView.text = getString(R.string.title_task)
-
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        //        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-        //                R.id.navigation_tasks, R.id.navigation_notes)
-        //                .build();
-        //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        //        NavigationUI.setupWithNavController(navView, navController);
     }
+
+    private fun replaceFragment(fragment: Fragment) {
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentHolder, fragment)
+            .commit()
+
+    }
+
+
 
 }
