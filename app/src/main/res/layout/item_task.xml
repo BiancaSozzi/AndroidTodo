@@ -3,18 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".notes.NotesListFragment">
+    android:layout_height="@dimen/simple_item_view_height">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notesListRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="9dp"
-        />
+        android:text="TasK Item"
+        android:layout_marginStart="@dimen/item_margin_default"
+        android:layout_marginTop="@dimen/item_margin_default"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
