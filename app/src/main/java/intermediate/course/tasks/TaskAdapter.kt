@@ -1,5 +1,6 @@
 package intermediate.course.tasks
 
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import intermediate.course.R
 import intermediate.course.foundations.BaseRecyclerAdapter
 import intermediate.course.models.Task
+import intermediate.course.views.TodoView
 import kotlinx.android.synthetic.main.item_task.view.*
 import kotlinx.android.synthetic.main.view_todo.view.*
 
@@ -22,9 +24,8 @@ class TaskAdapter(
             view.textView.text = data.title
 
             data.todos.forEach{todo ->
-                val todoView = LayoutInflater.from(view.context).inflate(R.layout.view_todo, view.todoContainer, false).apply {
-                    descriptionView.text = todo.description
-                    checkbox.isChecked = todo.isComplete
+                val todoView = (LayoutInflater.from(view.context).inflate(R.layout.view_todo, view.todoContainer, false) as TodoView).apply {
+                    initView(todo)
                 }
                 view.todoContainer.addView(todoView)
             }
