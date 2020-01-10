@@ -24,7 +24,7 @@ class TaskAdapter(
 
     class ViewHolder(val view: View): RecyclerView.ViewHolder(view){
         fun onBind(task: Task){
-            view.titleView.text = task.title
+            view.textView.text = task.title
         }
     }
 }
