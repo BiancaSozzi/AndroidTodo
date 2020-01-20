@@ -3,13 +3,11 @@ package intermediate.course.views
 import android.content.Context
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.widget.CheckBox
-import android.widget.TextView
 
 import androidx.constraintlayout.widget.ConstraintLayout
 
-import intermediate.course.R
 import intermediate.course.models.Todo
+import kotlinx.android.synthetic.main.view_todo.view.*
 
 class TodoView @JvmOverloads constructor(
     context: Context,
@@ -17,40 +15,40 @@ class TodoView @JvmOverloads constructor(
     defStyleAttr: Int = 1
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private var checkBox: CheckBox? = null
-    private var descriptionView: TextView? = null
 
-    fun initView(todo: Todo) {
-        checkBox = findViewById(R.id.checkbox)
-        descriptionView = findViewById(R.id.descriptionView)
-
-        descriptionView!!.text = todo.description
-        checkBox!!.isChecked = todo.isComplete
+    fun initView(todo: Todo, callback: (() -> Unit)? = null) {
+        checkbox.isChecked = todo.isComplete
+        descriptionView.text = todo.description
 
         if (todo.isComplete) {
             createStrikeThrough()
         }
 
-        setUpCheckStateListener()
+        setUpCheckStateListener(todo, callback)
     }
 
-    fun setUpCheckStateListener() {
-        checkBox!!.setOnCheckedChangeListener { button, isChecked ->
+    fun setUpCheckStateListener(todo: Todo, callback: (() -> Unit)? = null) {
+        checkbox.setOnCheckedChangeListener { _, isChecked ->
+            todo.isComplete = isChecked
+            callback?.invoke()
             if (isChecked) {
                 createStrikeThrough()
             } else {
-                removeStrikethrough()
+                removeStrikeThrough()
             }
         }
     }
 
     private fun createStrikeThrough() {
-        descriptionView!!.paintFlags = descriptionView!!.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        descriptionView.apply {
+            paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+        }
 
     }
 
-    private fun removeStrikethrough() {
-        descriptionView!!.paintFlags =
-            descriptionView!!.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+    private fun removeStrikeThrough() {
+        descriptionView.apply {
+            paintFlags = paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
+        }
     }
 }
