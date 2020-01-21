@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import intermediate.course.R
 import intermediate.course.foundations.BaseRecyclerAdapter
 import intermediate.course.models.Task
+import intermediate.course.navigation.NavigationActivity.Companion.FRAGMENT_VALUE_TASk
 import intermediate.course.views.TaskView
 import kotlinx.android.synthetic.main.view_add_button.view.*
 
 class TaskAdapter(
-    taskList: MutableList<Task> = mutableListOf()
+    taskList: MutableList<Task> = mutableListOf(),
+    val touchActionDelegate: TasksListFragment.TouchActionDelegate
 ): BaseRecyclerAdapter<Task>(taskList) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = if (viewType == TYPE_INFO){
@@ -26,9 +28,13 @@ class TaskAdapter(
         }
     }
 
-    class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view){
+    inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view){
         override fun onBind(data: Unit) {
             view.buttonText.text = view.context.getString(R.string.add_button_task)
+
+            view.setOnClickListener{
+                touchActionDelegate.onAddButtonClick(FRAGMENT_VALUE_TASk)
+            }
         }
     }
 }

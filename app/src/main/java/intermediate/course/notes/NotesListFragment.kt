@@ -1,6 +1,7 @@
 package intermediate.course.notes
 
 
+import android.content.Context
 import android.os.Bundle
 
 import androidx.fragment.app.Fragment
@@ -15,6 +16,18 @@ import intermediate.course.models.Note
 import kotlinx.android.synthetic.main.fragment_notes_list.*
 
 class NotesListFragment : Fragment() {
+
+    lateinit var touchActionDelegate: TouchActionDelegate
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        context?.let{
+            if (it is TouchActionDelegate){
+                touchActionDelegate = it
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +49,7 @@ class NotesListFragment : Fragment() {
             Note("My first note"),
             Note("My second note"),
             Note("this is another note")
-        ))
+        ), touchActionDelegate)
         notesListRecyclerView.adapter = adapter
     }
 
@@ -45,6 +58,10 @@ class NotesListFragment : Fragment() {
         fun newInstance() = NotesListFragment().apply{
             Bundle()
         }
+    }
+
+    interface TouchActionDelegate {
+        fun onAddButtonClick(value: String)
     }
 
 }

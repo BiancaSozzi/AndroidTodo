@@ -16,6 +16,18 @@ import kotlinx.android.synthetic.main.fragment_tasks_list.*
 
 class TasksListFragment : Fragment() {
 
+    lateinit var touchActionDelegete: TouchActionDelegate
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        context?.let {
+            if ( it is TouchActionDelegate) {
+                touchActionDelegete = it
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -39,7 +51,7 @@ class TasksListFragment : Fragment() {
                 )
             ),
             Task("testing 2")
-        ))
+        ), touchActionDelegete)
         recyclerView.adapter = adapter
     }
 
@@ -48,5 +60,9 @@ class TasksListFragment : Fragment() {
         fun newInstance() = TasksListFragment().apply{
             Bundle()
         }
+    }
+
+    interface TouchActionDelegate {
+        fun onAddButtonClick(value: String)
     }
 }
