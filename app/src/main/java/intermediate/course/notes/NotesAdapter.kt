@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView
 import intermediate.course.R
 import intermediate.course.foundations.BaseRecyclerAdapter
 import intermediate.course.models.Note
+import intermediate.course.navigation.NavigationActivity.Companion.FRAGMENT_VALUE_NOTE
 import intermediate.course.tasks.TaskAdapter
 import intermediate.course.views.NoteView
 import kotlinx.android.synthetic.main.item_note.view.*
 import kotlinx.android.synthetic.main.view_add_button.view.*
 
 class NotesAdapter(
-    noteList: MutableList<Note> = mutableListOf()
+    noteList: MutableList<Note> = mutableListOf(),
+    val touchActionDelegate: NotesListFragment.TouchActionDelegate
 ): BaseRecyclerAdapter<Note>(noteList) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder = if (viewType == TYPE_ADD_BUTTON){
@@ -29,9 +31,13 @@ class NotesAdapter(
         }
     }
 
-    class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view){
+    inner class AddButtonViewHolder(view: View) : BaseRecyclerAdapter.AddButtonViewHolder(view){
         override fun onBind(data: Unit) {
             view.buttonText.text = view.context.getString(R.string.add_button_note)
+
+            view.setOnClickListener{
+                touchActionDelegate.onAddButtonClick(FRAGMENT_VALUE_NOTE)
+            }
         }
     }
 }
