@@ -2,15 +2,17 @@ package intermediate.course.foundations
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import intermediate.course.R
-import intermediate.course.models.Note
-import intermediate.course.models.Task
-import intermediate.course.tasks.TaskAdapter
-import kotlinx.android.synthetic.main.view_add_button.view.*
 
 abstract class BaseRecyclerAdapter<T> (
-    protected val list: MutableList<T> = mutableListOf()
+    protected val masterList: MutableList<T> = mutableListOf()
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+    fun updateList(list: MutableList<T>) {
+        masterList.clear()
+        masterList.addAll(list)
+        notifyDataSetChanged()
+    }
 
     override fun getItemViewType(position: Int): Int = if (position == 0) {
         TYPE_ADD_BUTTON
@@ -18,18 +20,18 @@ abstract class BaseRecyclerAdapter<T> (
         TYPE_INFO
     }
 
-    override fun getItemCount(): Int = list.size + 1
+    override fun getItemCount(): Int = masterList.size + 1
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is AddButtonViewHolder){
-            holder.onBind(Unit)
+            holder.onBind(Unit, position)
         } else {
-            (holder as BaseViewHolder<T>).onBind(list[position - 1])
+            (holder as BaseViewHolder<T>).onBind(masterList[position - 1], position - 1)
         }
     }
 
     abstract class BaseViewHolder<E>(val view: View): RecyclerView.ViewHolder(view) {
-        abstract fun onBind(data: E)
+        abstract fun onBind(data: E, listIndex: Int)
     }
 
     abstract class AddButtonViewHolder(view: View): BaseViewHolder<Unit>(view)
