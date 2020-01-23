@@ -1,21 +1,14 @@
 package intermediate.course.tasks
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.LinearLayoutManager
-
 import intermediate.course.R
-import intermediate.course.models.Task
-import intermediate.course.models.Todo
-import kotlinx.android.synthetic.main.fragment_tasks_list.*
 
 class TasksListFragment : Fragment() {
 
@@ -27,7 +20,7 @@ class TasksListFragment : Fragment() {
         super.onAttach(context)
 
         context?.let {
-            if ( it is TouchActionDelegate) {
+            if (it is TouchActionDelegate) {
                 touchActionDelegete = it
             }
         }
@@ -49,21 +42,21 @@ class TasksListFragment : Fragment() {
         setContentView()
     }
 
-    private fun setContentView(){
+    private fun setContentView() {
         contentView.initView(touchActionDelegete, viewModel)
     }
 
     private fun bindViewModel() {
         viewModel = ViewModelProviders.of(this).get(TaskViewModel::class.java)
 
-        viewModel.taskListLiveData.observe(this, Observer{ taskList ->
+        viewModel.taskListLiveData.observe(this, Observer { taskList ->
             contentView.updateList(taskList)
         })
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = TasksListFragment().apply{
+        fun newInstance() = TasksListFragment().apply {
             Bundle()
         }
     }

@@ -8,24 +8,27 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import intermediate.course.R
 import intermediate.course.models.Task
 import kotlinx.android.synthetic.main.item_task.view.*
-import kotlinx.android.synthetic.main.view_todo.view.*
 
 class TaskView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 1
-) : ConstraintLayout(context, attrs, defStyleAttr)  {
+) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    lateinit var task:Task;
+    lateinit var task: Task;
 
-    fun initView(task: Task, todoCheckCallback: (Int, Boolean) -> Unit){
+    fun initView(task: Task, todoCheckCallback: (Int, Boolean) -> Unit) {
 
         this.task = task
 
         textView.text = task.title
 
         task.todos.forEachIndexed { todoIndex, todo ->
-            val todoView = (LayoutInflater.from(context).inflate(R.layout.view_todo, todoContainer, false) as TodoView).apply {
+            val todoView = (LayoutInflater.from(context).inflate(
+                R.layout.view_todo,
+                todoContainer,
+                false
+            ) as TodoView).apply {
                 initView(todo) { isChecked ->
 
                     todoCheckCallback.invoke(todoIndex, isChecked)
@@ -42,7 +45,7 @@ class TaskView @JvmOverloads constructor(
 
     }
 
-    fun isTaskComplete(): Boolean = task.todos.filter{ !it.isComplete }.isEmpty()
+    fun isTaskComplete(): Boolean = task.todos.filter { !it.isComplete }.isEmpty()
 
     private fun createStrikeThrough() {
         textView.apply {

@@ -17,7 +17,10 @@ class TaskListView @JvmOverloads constructor(
     private lateinit var touchActionDelegete: TasksListFragment.TouchActionDelegate
     private lateinit var dataActionDelegate: TaskListViewContract
 
-    fun initView(taDelegate: TasksListFragment.TouchActionDelegate, daDelegate: TaskListViewContract){
+    fun initView(
+        taDelegate: TasksListFragment.TouchActionDelegate,
+        daDelegate: TaskListViewContract
+    ) {
         setDelegates(taDelegate, daDelegate)
         setUpView()
     }
@@ -32,12 +35,15 @@ class TaskListView @JvmOverloads constructor(
     }
 
 
-    private fun setDelegates(taDelegate: TasksListFragment.TouchActionDelegate, daDelegate: TaskListViewContract) {
+    private fun setDelegates(
+        taDelegate: TasksListFragment.TouchActionDelegate,
+        daDelegate: TaskListViewContract
+    ) {
         touchActionDelegete = taDelegate
         dataActionDelegate = daDelegate
     }
 
-    fun updateList(list: MutableList<Task>){
+    fun updateList(list: MutableList<Task>) {
         adapter.updateList(list)
     }
 

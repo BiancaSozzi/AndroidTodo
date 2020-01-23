@@ -3,15 +3,12 @@ package intermediate.course.notes
 
 import android.content.Context
 import android.os.Bundle
-
-import androidx.fragment.app.Fragment
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-
 import intermediate.course.R
 
 class NotesListFragment : Fragment() {
@@ -22,8 +19,8 @@ class NotesListFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        context?.let{
-            if (it is TouchActionDelegate){
+        context?.let {
+            if (it is TouchActionDelegate) {
                 touchActionDelegate = it
             }
         }
@@ -45,13 +42,13 @@ class NotesListFragment : Fragment() {
         setContentView()
     }
 
-    private fun setContentView(){
+    private fun setContentView() {
         contentView.initView(touchActionDelegate, noteViewModel)
     }
 
     companion object {
 
-        fun newInstance() = NotesListFragment().apply{
+        fun newInstance() = NotesListFragment().apply {
             Bundle()
         }
     }
@@ -63,7 +60,7 @@ class NotesListFragment : Fragment() {
     private fun bindViewModel() {
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel::class.java)
 
-        noteViewModel.noteListLiveData.observe(this, Observer{notesList ->
+        noteViewModel.noteListLiveData.observe(this, Observer { notesList ->
             contentView.updateList(notesList)
         })
     }
