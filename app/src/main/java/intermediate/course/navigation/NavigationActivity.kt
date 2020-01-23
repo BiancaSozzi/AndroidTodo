@@ -2,17 +2,17 @@ package intermediate.course.navigation
 
 import android.content.Intent
 import android.os.Bundle
-
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import intermediate.course.R
 import intermediate.course.create.CreateActivity
 import intermediate.course.notes.NotesListFragment
 import intermediate.course.tasks.TasksListFragment
 import kotlinx.android.synthetic.main.activity_navigation.*
 
-class NavigationActivity : AppCompatActivity(), TasksListFragment.TouchActionDelegate, NotesListFragment.TouchActionDelegate {
+class NavigationActivity : AppCompatActivity(), TasksListFragment.TouchActionDelegate,
+    NotesListFragment.TouchActionDelegate {
 
     private val mOnNavigationItemSelectedListener =
         BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
@@ -44,7 +44,7 @@ class NavigationActivity : AppCompatActivity(), TasksListFragment.TouchActionDel
 
     }
 
-    private fun goToCreateActivity(fragmentValue: String){
+    private fun goToCreateActivity(fragmentValue: String) {
         startActivity(Intent(this, CreateActivity::class.java).apply {
             putExtra(FRAGMENT_TYPE_KEY, fragmentValue)
         })

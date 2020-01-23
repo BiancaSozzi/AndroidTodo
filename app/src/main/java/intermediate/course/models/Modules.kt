@@ -1,7 +1,7 @@
 package intermediate.course.models
 
 data class Task @JvmOverloads constructor(
-    var title:String,
+    var title: String,
     val todos: MutableList<Todo> = mutableListOf(),
     var tag: Tag? = null
 )
@@ -9,7 +9,7 @@ data class Task @JvmOverloads constructor(
 
 data class Todo(
     var description: String,
-    var isComplete:  Boolean = false
+    var isComplete: Boolean = false
 )
 
 data class Note(
@@ -18,6 +18,6 @@ data class Note(
 )
 
 data class Tag(
-    val name:String,
+    val name: String,
     val colourResId: Int
 )

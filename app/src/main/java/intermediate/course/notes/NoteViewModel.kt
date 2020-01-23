@@ -9,14 +9,9 @@ class NoteViewModel : ViewModel(), NoteListViewContract {
 
     private val _noteListLiveData: MutableLiveData<MutableList<Note>> = MutableLiveData()
     val noteListLiveData: LiveData<MutableList<Note>> = _noteListLiveData
+    private val model: NoteModel = NoteModel()
 
     init {
-        _noteListLiveData.postValue(getFakeData())
+        _noteListLiveData.postValue(model.getFakeData())
     }
-
-    fun getFakeData() : MutableList<Note> = mutableListOf(
-        Note("My first note"),
-        Note("My second note"),
-        Note("this is another note")
-    )
 }
