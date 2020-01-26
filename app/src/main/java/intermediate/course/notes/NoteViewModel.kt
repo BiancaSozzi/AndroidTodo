@@ -3,6 +3,7 @@ package intermediate.course.notes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import intermediate.course.foundations.ApplicationScope
 import intermediate.course.models.Note
 import toothpick.Toothpick
 import toothpick.config.Module
@@ -17,13 +18,7 @@ class NoteViewModel : ViewModel(), NoteListViewContract {
     lateinit var model: INoteModel
 
     init {
-        val scope = Toothpick.openScope(this)
-        scope.installModules(object : Module() {
-            init {
-                bind(INoteModel::class.java).toInstance(NoteLocalModel())
-            }
-        })
-        Toothpick.inject(this, scope)
+        Toothpick.inject(this, ApplicationScope.scope)
         _noteListLiveData.postValue(model.getFakeData())
     }
 }
