@@ -11,6 +11,7 @@ import android.view.ViewGroup
 
 import intermediate.course.R
 import intermediate.course.foundations.ApplicationScope
+import intermediate.course.foundations.NullFieldChecker
 import intermediate.course.foundations.StateChangeTextWatcher
 import intermediate.course.models.Task
 import intermediate.course.models.Todo
@@ -89,7 +90,8 @@ class CreateTaskFragment : Fragment() {
         containerView.removeView(view)
     }
 
-    private fun canAddTodos(): Boolean = containerView.childCount < MAX_TODO_COUNT + 1
+    private fun canAddTodos(): Boolean = (containerView.childCount < MAX_TODO_COUNT + 1) &&
+            !(containerView.getChildAt(containerView.childCount - 1) as NullFieldChecker).hasNullField()
 
     private fun isTaskEmpty(): Boolean = createTaskView.taskEditText.editableText.isNullOrEmpty()
 
